@@ -1,31 +1,28 @@
 ﻿
 using Rpg_Game.Npj;
 using Rpg_Game.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
-using static Rpg_Game.Utils.Dice;
+
 
 namespace Rpg_Game
 {
     public abstract class Personnage
     {
+        public int x ,y ;
         public int NbOr;
         public int NbCuir;
         public event Action<Personnage> OnDieEvent;
         public static int CurrentId = 1;
         public bool IsAlive => Pv > 0;
    
-        public Personnage(DiceType dice, int nbor,int nbcuir) : this( , nbor,nbcuir)
+        public Personnage(DiceType dice, int nbor,int nbcuir)
         {
+            Stats = new Stats();
             GenerateRandomStat(dice);
             NbOr = nbor;
             NbCuir = nbcuir; 
             Id = CurrentId++;
-            Stats = new Stats();
+
+            
         }
         public int Id { get; set; }
         public int Pv
@@ -42,9 +39,9 @@ namespace Rpg_Game
         public void GenerateRandomStat(DiceType dice)
         {
             Random random = new Random();
-            Stats[StatType.Pv] = Dice.Throws(dice, 5, 3);
-            Stats[StatType.Force] = Dice.Throws(dice, 5, 3);
-            Stats[StatType.Endurance] = Dice.Throws(dice, 5, 3);
+            
+            Stats[StatType.Force] = Dice.Throws(dice, 6, 3);
+            Stats[StatType.Endurance] = Dice.Throws(dice, 6, 3);
             GeneratePVStat();
         }
 
@@ -66,7 +63,10 @@ namespace Rpg_Game
             return $"Pv : {Pv}\n" +
                    $"Force : {Stats[StatType.Force]}\n" +
                    $"Endurance : {Stats[StatType.Endurance]}\n" +
+                   $"Nombre d'or: {NbOr}\n"+
+                   $"Nombre de cuir : {NbCuir}\n" +
                    $"Id : {Id}\n";
+                   
         }
         public virtual void Affiche()
         { 

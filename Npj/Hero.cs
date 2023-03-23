@@ -11,18 +11,20 @@ namespace Rpg_Game.npj
     //public delegate void Competence ();
     public class Hero : Personnage
     {
-        
+        public int nbor;
+        public int nbcuir;
         public Action Competence1;
         public Func<int, int, float> test;
         //public Competence Competence1;
         public Action Competence2;
         public Action Combo;
 
-        public Hero(string name, int nbor, int nbcuir) : base(DiceType.D10,nbor,nbcuir)
+        public Hero(string name) : base(DiceType.D10,0,0)
         {
             Name = name;
-            NbOr = nbor;
-            NbCuir = nbcuir;
+              
+
+            
         }
         public string Name { get; set; }
         public void SeSoigner()
@@ -32,7 +34,7 @@ namespace Rpg_Game.npj
         public void Frapper(Monstre m)
         {
 
-            if (!m.IsAlive)
+            if (m.IsAlive)
 
             {
                 Console.WriteLine($"PV {Name}: {Pv}  |  Pv {m.Race}: {m.Pv}");
@@ -43,6 +45,7 @@ namespace Rpg_Game.npj
                     m.RaiseDieEvent();
             }
             else Console.WriteLine($"{m.Race} Il est Mourut"); 
+                
         }
         
 
@@ -51,7 +54,7 @@ namespace Rpg_Game.npj
         public static Hero operator +(Hero p1, Hero p2)
         {
             Console.WriteLine("Fuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu Sion!");
-            Hero fusion = new Hero(p1.Name.ConcatFusion(p2.Name),0,0);
+            Hero fusion = new Hero(p1.Name.ConcatFusion(p2.Name));
             fusion.Stats[StatType.Pv] = p1.Stats[StatType.Pv] + p2.Stats[StatType.Pv];
             fusion.Stats[StatType.Force] = p1.Stats[StatType.Force] + p2.Stats[StatType.Force];
             fusion.Stats[StatType.Endurance] = p1.Stats[StatType.Endurance] + p2.Stats[StatType.Endurance];
@@ -62,9 +65,12 @@ namespace Rpg_Game.npj
         {
             return $"{Name}:\n" + base.ToString();
         }
-        public void Loot(Monstre p)
+        public void Loot(Monstre m)
         {
-            Console.WriteLine($"Mon personnage : {Name} loot le monstre : {p.Race}");
+            Console.WriteLine($"Mon personnage : {Name} loot le monstre : {m.Race}");
+            NbOr += m.NbOr;
+            NbCuir += m.NbCuir;
+            
         }
     }
 }

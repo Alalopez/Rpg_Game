@@ -13,17 +13,12 @@ namespace Rpg_Game.Npj
         {
             Race = race;
             NbOr = nbor;
-            NbCuir = nbcuir;
-            
-           
-
-
-                
+            NbCuir = nbcuir;      
         }
 
         public string Race { get; set; }
         public void Frapper(Hero h) {
-            if (!h.IsAlive)
+            if (h.IsAlive)
 
             {
                 Console.WriteLine($"PV {h.Name} : {h.Pv}  |  Pv {Race} : {Pv}");
@@ -40,6 +35,7 @@ namespace Rpg_Game.Npj
         {
             return $"{Race}:\n" + base.ToString();
         }
+        
     }
 }
 

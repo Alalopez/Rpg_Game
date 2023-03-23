@@ -5,7 +5,7 @@ namespace Rpg_Game.Npj
 {
     public class Nain : Hero
     {
-        public Nain(string name,int nbor, int nbcuir) : base(name, nbor, nbcuir)
+        public Nain(string name) : base(name)
         {
             Stats[StatType.Endurance] += 2;
 
